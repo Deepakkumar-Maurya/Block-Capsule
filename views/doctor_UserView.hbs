@@ -49,10 +49,10 @@
     <div class="final-doctorview">
       <div class="rectangle-parent3">
         <div class="frame-child19"></div>
-        <button class="makers-button1">
-          <div class="button2">Not Verified</div>
+        <button class="makers-button1" id="verified">
+          <div class="button2">Verified</div>
         </button>
-        <button class="makers-button2">
+        <button class="makers-button2" id="verify">
           <div class="button3">Verify</div>
         </button>
       </div>
@@ -168,6 +168,7 @@
         </div>
         <div class="profile-picture">
           <img
+          id="userprofileimg"
             class="img-20190402-082739-275-icon"
             alt=""
             src="/photos/img-20190402-082739-275@2x.png"
@@ -369,6 +370,39 @@ if (arrowRightFromBracketSolid) {
       "inputs": [
         {
           "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "verify",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "isVerified",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "user",
           "type": "address"
         }
@@ -531,7 +565,7 @@ if (arrowRightFromBracketSolid) {
     }
   ];
 
-        const contractAddress = 'your-contract-address';
+        const contractAddress = 'contract-address';
         window.web3 = new Web3(window.ethereum);
         window.contract = new window.web3.eth.Contract(ABI, contractAddress);
         
@@ -539,6 +573,35 @@ if (arrowRightFromBracketSolid) {
         //localStorage.removeItem("Metamaskid");
         console.log(address)
 
+// --------------------------------------------- 
+        const verify = document.getElementById('verify');
+        const verified = document.getElementById('verified');
+
+        const isVerified = window.contract.methods.isVerified(address).call({ from: address });
+        console.log(isVerified, "hgvhjgc");
+        isVerified.then(result => {
+          console.log(result);
+          let ans = result;
+          if (ans == "Yes")
+          {
+            verified.style.display = 'block';
+            verify.style.display = 'none';
+          }
+          if (ans == "No")
+          {
+            verified.style.display = 'none';
+            verify.style.display = 'block';
+            const doctorid = localStorage.getItem("doctorid");
+            verify.addEventListener('click', async (e) => {
+              e.preventDefault();
+              await window.contract.methods.verify(address).send({ from : doctorid });
+              verified.style.display = 'block';
+              verify.style.display = 'none';
+            })
+          }
+        })
+
+// --------------------------------------------
         const bloodsugar = document.getElementById('bloodsugar');
         const bloodgroup = document.getElementById('bloodgroup');
         const bloodpressure = document.getElementById('bloodpressure');
@@ -591,6 +654,10 @@ if (arrowRightFromBracketSolid) {
               weight.innerHTML = userData.weight + ' kg';
               name.innerHTML = userData.name;
               bname.innerHTML = userData.name;
+            }
+            if (filejson.fileName == 'userimg')
+            {
+              document.getElementById("userprofileimg").src = filejson.url;
             }
           })
         });

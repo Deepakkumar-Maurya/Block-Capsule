@@ -85,7 +85,7 @@
           {{!-- <h3 class="metamask-xyz1234567891">Metamask : </h3> --}}
           <div style="width:30%"><h3 class="metamask-xyz1234567891" id="metaid" style="display:none">{{Metamask}}</h3></div>
           
-          <h3 class="user-id2">User Id : {{Name}}</h3>
+          <h3 class="user-id2" style="top: 1.7cm">User Id : {{Name}}</h3>
           {{!-- <button class="frame-child39"></button>
           <b class="sign-out1">Sign out</b>
           <button class="frame-child40"></button>
@@ -102,6 +102,7 @@
             {{else}}
             <h5 class="years1"> # Years</h5>
             {{/if}} --}}
+            
             <h5 class="years1" id="docage"> # Years</h5>
         </div>
     
@@ -121,20 +122,7 @@
           {{!-- <img class="frame-child42" alt="" src="/photos/group-311.svg" /> --}}
         </div>
       </div>
-      {{!-- <div class="edit1">
-        <h4 class="h41">80</h4>
-        <div class="frame22">
-          <b class="total-requests">approved requests</b>
-          <img class="frame-child42" alt="" src="/photos/group-312.svg" />
-        </div>
-      </div> --}}
-      {{!-- <div class="view-allow">
-        <h4 class="h41">80</h4>
-        <div class="frame22">
-          <b class="total-requests">Total Patients </b>
-          <img class="frame-child42" alt="" src="/photos/group-313.svg" />
-        </div>
-      </div> --}}
+
       <div class="frame-parent2">
         <div class="frame25">
           <h3 class="search-patient">Search Patient</h3>
@@ -193,27 +181,6 @@
 <script src="../connect.js"></script>
 {{!-- --------------------------------------------  --}}
     <script>
-      //function View(MetaMaskid){
-      //  localStorage.setItem("Metamaskid", MetaMaskid);
-      //  const address = document.getElementById("metaid").innerHTML;
-      //  window.location.href = "/doctor_UserView";
-      //}
-      //function Edit(Metamaskid){
-      //  localStorage.setItem("Metamaskid", Metamaskid);
-      //  window.location.href = "/doctor_UserEdit";
-      //}
-
-
-      //var user_view_edit = document.getElementById("user-view-edit");
-      //if (user_view_edit) {
-      //  user_view_edit.addEventListener("click", function (e) {
-      //    window.location.href = "/doctor_UserView";
-      //  });
-      //}
-
-
-
-
 
       var gearSolid1 = document.getElementById("gearSolid1");
       if (gearSolid1) {
@@ -281,6 +248,39 @@ if (arrowRightFromBracketSolid) {
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "verify",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "isVerified",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -448,7 +448,7 @@ if (arrowRightFromBracketSolid) {
     }
   ];
 
-        const contractAddress = 'your contract address';
+        const contractAddress = 'contract-address';
         window.web3 = new Web3(window.ethereum);
         window.contract = new window.web3.eth.Contract(ABI, contractAddress);
 
@@ -458,6 +458,7 @@ if (arrowRightFromBracketSolid) {
 // --------------------------Permission -------------------
       async function View(MetaMaskid){
         localStorage.setItem("Metamaskid", MetaMaskid);
+        localStorage.setItem("doctorid", address);
         //console.log(address)
         const pms = await window.contract.methods.isViewAllowed(MetaMaskid).call({ from: address });
         console.log(pms)

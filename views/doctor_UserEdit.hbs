@@ -310,6 +310,39 @@ if (arrowRightFromBracketSolid) {
       "inputs": [
         {
           "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "verify",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "isVerified",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
           "name": "user",
           "type": "address"
         }
@@ -472,7 +505,7 @@ if (arrowRightFromBracketSolid) {
     }
   ];
 
-        const contractAddress = 'your-contract-address';
+        const contractAddress = 'contract-address';
         window.web3 = new Web3(window.ethereum);
         window.contract = new window.web3.eth.Contract(ABI, contractAddress);
         

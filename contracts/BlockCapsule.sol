@@ -8,6 +8,8 @@ contract BlockCapsule {
         bool access;
     }
 
+    mapping (address => bool) verified;
+
     mapping (address => string[]) value;
     mapping (address => mapping (address => bool)) viewOwnership;
     mapping (address => mapping (address => bool)) editOwnership;
@@ -18,6 +20,20 @@ contract BlockCapsule {
 
     function add (address _user, string memory url) external {
         value[_user].push(url);
+        verified[_user] = false;
+    }
+
+    function verify (address _user) external {
+        verified[_user] = true;
+    }
+    function isVerified (address _user) public view returns( string memory ) {
+        if (verified[_user])
+        {
+            return "Yes";
+        }
+        else{
+            return "No";
+        }
     }
 
     function allowView (address user) external {
